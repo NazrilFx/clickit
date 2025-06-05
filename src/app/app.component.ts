@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  standalone: true,
+  imports: [RouterOutlet, RouterLink],
+  template: `
+    <h1>Welcome</h1>
+    <a routerLink="/about">Ke Halaman About</a>
+    <router-outlet></router-outlet>
+  `
 })
-export class AppComponent {
-  title = 'clickit';
-}
+export class AppComponent {}
