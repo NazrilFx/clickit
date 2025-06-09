@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ThemeSwitcher from "../components/ThemeSwithcer";
 import localfont from "next/font/local";
 
 const poppins = localfont({

@@ -1,6 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { FiChevronDown, FiBarChart2 } from "react-icons/fi";
 import { AiTwotoneDollar } from "react-icons/ai";
 import { PiLinkSimpleDuotone, PiWalletDuotone } from "react-icons/pi";
@@ -8,8 +7,6 @@ import { TbArrowBarToDown } from "react-icons/tb";
 import Link from "next/link";
 
 export default function AffiliateSidebar() {
-  const pathname = usePathname();
-
   return (
     <>
       <aside className="bg-softgray w-60 flex flex-col h-[100vw]">
