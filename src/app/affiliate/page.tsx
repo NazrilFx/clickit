@@ -2,6 +2,7 @@ export default function AffiliatePage() {
   return (
     <>
       <section aria-label="Grow your audience" className="mb-8">
+        <h1 className="mr-auto font-bold text-2xl pt-3 pb-5">Your Link</h1>
         <h3 className="font-bold text-xl mb-1">Grow your audience</h3>
         <p className="text-[#4a4a4a] mb-6 max-w-xl">
           Give subscribers exclusive sign-up benefits to grow your list faster.

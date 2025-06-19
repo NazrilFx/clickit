@@ -14,6 +14,7 @@ export default function ThemeSwitcher() {
   function toggleTheme() {
     const newTheme = isDark ? "light" : "dark";
     if (newTheme === "light") {
+      localStorage.setItem("theme", "light");
       document.documentElement.removeAttribute("data-theme");
     } else {
       document.documentElement.setAttribute("data-theme", "dark");
