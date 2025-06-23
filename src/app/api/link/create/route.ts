@@ -3,12 +3,18 @@ import Link from "@/models/Link";
 import Activity from "@/models/Activity";
 import connectDB from "@/lib/connectDB";
 import getCookieToken from "@/utils/getCookieToken";
+import { nanoid } from "nanoid";
 
 export async function POST(req: Request) {
     try {
         await connectDB();
         const { name, description, redirectUrl, image, video, user_id, category_id, csrfToken } = await req.json();
-        const csrfTokenFromCookie = getCookieToken(req, "csrf_secret");
+        const csrfTokenFromCookie = getCookieToken(req, "csrf_secret"); 
+        let uid: string;
+
+        do {
+            uid = nanoid(8)
+        } while (await Link.findOne({ linkUid : uid })); // Generate unique linkUid
 
         if (!csrfTokenFromCookie || !csrfToken || csrfTokenFromCookie !== csrfToken) {
             console.log(csrfToken);
@@ -26,12 +32,13 @@ export async function POST(req: Request) {
         }
         // Simpan user ke database
         const newLink = new Link({
-            name,
+            name, 
+            linkUid: uid,
             description,
             redirectUrl,
             image: image || "", // Be empty string if not provided
             video: video || "", // Be empty string if not provided
-            user_id,           // Refferens to user
+            user_id, // Refferens to user
             category_id,
             created_at: new Date(),
             updated_at: new Date(),

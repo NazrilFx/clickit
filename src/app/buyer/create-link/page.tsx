@@ -2,40 +2,70 @@
 import { useState, useEffect } from "react";
 import FormInput from "@/components/FormInput";
 import CountryDialCodePicker from "@/components/CountryNumberPicker";
+import getCsrfToken from "@/utils/fetcherCsrfToken";
+import getCurrentUser from "@/utils/fetchCurrentUser";
+import WALinkMaker from "@/utils/WALinkMaker";
+import getAllCategories from "@/utils/fetchAllCategories";
+import { IUser } from "@/models/User";
+import { ICategoryWithId } from "@/models/Category";
+import CategoriesPicker from "@/components/CategoriesPicker";
 
 export default function AffiliatePage() {
   const [number, setNumber] = useState("");
   const [description, setDescription] = useState("");
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [csrfToken, setCsrfToken] = useState("");
+  const [currentUser, setCurrentUser] = useState<IUser | null>(null);
+  const [categories, setCategories] = useState<ICategoryWithId[] | []>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
+  useEffect(() => {
+    getCsrfToken().then((token) => setCsrfToken(token || ""));
+
+    getCurrentUser().then((user) => setCurrentUser(user));
+
+    getAllCategories()
+      .then((categories) => setCategories(Array.isArray(categories) ? categories : []))
+      .finally(() => setTimeout(() => setLoading(false), 1000));
+  }, []);
+
+  useEffect(() => {
+    console.log("user :", selectedCategory);
+  }, [selectedCategory]);
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const data: {
-      linkName: string;
-      number: string;
-      message: string;
-      description: string;
-    } = {
-      linkName: name,
-      number: number,
-      message: message,
-      description: description,
-    };
-
+    const redirectUrl = WALinkMaker(number, message);
     try {
-      const response = await fetch("/api/link/create", {
+      const res = await fetch("/api/link/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          name,
+          description,
+          category_id: selectedCategory,
+          user_id: currentUser?._id, // Ensure currentUser is not null
+          redirectUrl,
+          image: "", // Optional, can be added later
+          video: "", // Optional, can be added later
+          phone: number,
+          csrfToken, // Include CSRF token in the request
+        }),
       });
-
-      const result = await response.json();
-      console.log("Hasil:", result);
+      const json = await res.json();
+      if (res.ok) {
+        alert("Signup successful! please login to continue");
+        // Redirect to login or home page
+        setName("");
+        setNumber("");
+      } else {
+        alert(json.message || "Signup failed");
+      }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error during signup:", error);
     }
   };
 
@@ -45,7 +75,7 @@ export default function AffiliatePage() {
         <h1 className="mr-auto text-blue-900 rounded-2xl border-1 border-blue-500 bg-blue-50 w-60 flex justify-center font-bold text-2xl py-3 my-3">
           Create Your Link
         </h1>
-        <form className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5">
           <FormInput
             type="text"
             name="linkName"
@@ -64,6 +94,7 @@ export default function AffiliatePage() {
             type="number"
             placeholder="Whatsapp Number (ex: 6285792962289)"
           />
+          <CategoriesPicker categories={categories} onChange={(e) => setSelectedCategory(e.target.value)}/>
           <FormInput
             type="text"
             name="message"
@@ -86,7 +117,7 @@ export default function AffiliatePage() {
             type="submit"
             className="w-full py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-blue-700 transition-colors"
           >
-            Kirim Pesan
+            {loading ? "Loading..." : "Create Link"}
           </button>
         </form>
       </section>

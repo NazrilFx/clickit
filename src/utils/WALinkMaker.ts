@@ -1,4 +1,4 @@
-export default function WALinkMaker (number:string, message:string) :string {
+export default function WALinkMaker (phone:string, message:string) :string {
     const formatMessage = encodeURIComponent(message);
-    return `https://wa.me/${number}?text=<${formatMessage}>`;
+    return `https://wa.me/${phone}?text=${formatMessage}`;
 } 

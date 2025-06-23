@@ -2,23 +2,32 @@ import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface ILink extends Document {
     name: string;
+    linkUid: string;
     description: string;
     redirectUrl: string;
     image?: string
     video?: string;
-    user_id: mongoose.Types.ObjectId; // Refferens to store
+    totalClicks: number;
+    user_id: mongoose.Types.ObjectId; // Refferens to owner
     category_id: mongoose.Types.ObjectId; // Refferens to category
     created_at: Date;
     updated_at: Date;
 }
 
+export interface ILinkWithId extends ILink, Document {
+    _id: string;
+}
+
 const LinkSchema: Schema<ILink> = new Schema({
     name: { type: String, required: true },
+    linkUid: { type: String, required: true, unique: true },
     description: { type: String, required: true },
     redirectUrl: { type: String, required: true },
+    totalClicks: { type: Number, default: 0 },
     image: { type: String, required: false },
-    user_id: { type: Schema.Types.ObjectId, ref: "Store", required: true }, // Relasi ke vendor
-    category_id: { type: Schema.Types.ObjectId, ref: "Category", required: true }, // Relasi ke vendor
+    video: { type: String, required: false },
+    user_id: { type: Schema.Types.ObjectId, ref: "User", required: true }, // Relation to User
+    category_id: { type: Schema.Types.ObjectId, ref: "Category", required: true }, // Relation to Category
     created_at: { type: Date, default: Date.now },
     updated_at: { type: Date, default: Date.now },
 });

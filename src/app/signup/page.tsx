@@ -18,10 +18,6 @@ export default function SignupPage() {
     getCsrfToken().then((token) => setCsrfToken(token || "")).finally(() => setLoading(false));
   }, []);
 
-  useEffect(() => {
-    console.log("CSRF Token:", csrfToken);
-  }, [csrfToken])
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {

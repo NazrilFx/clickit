@@ -1,10 +1,14 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+ import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface ICategory extends Document {
     name: string;
     description: string;
     created_at: Date;
     updated_at: Date;
+}
+
+export interface ICategoryWithId extends ICategory {
+    _id: string; // Mongoose adds _id field by default
 }
 
 const CategorySchema: Schema<ICategory> = new Schema({
