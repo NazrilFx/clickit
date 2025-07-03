@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import Affiliator from "@/models/Affiliator";
 import connectDB from "@/lib/connectDB";
-import { redirect } from "next/navigation";
 
 export async function GET(req: NextRequest) {
   await connectDB();

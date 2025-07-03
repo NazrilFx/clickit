@@ -28,6 +28,7 @@ export async function getCurrentUser(req: Request) {
 
         if (error instanceof Error) {
             errorMessage = error.message;
+            console.error("Error in getCurrentUser:", errorMessage);
         }
         return null;
     }

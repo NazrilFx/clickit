@@ -28,6 +28,7 @@ export async function getCurrentAffiliator(req: Request) {
 
         if (error instanceof Error) {
             errorMessage = error.message;
+            console.error("Error in getCurrentAffiliator:", errorMessage);
         }
         return null;
     }

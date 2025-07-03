@@ -99,6 +99,10 @@ export default function LinksCard() {
     }
   };
 
+  if (loading) {
+    return <div className="text-center">Loading...</div>;
+  }
+
   return (
     <>
       {showAddClicksModal && (
