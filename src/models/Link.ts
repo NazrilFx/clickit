@@ -8,6 +8,7 @@ export interface ILink extends Document {
     image?: string
     video?: string;
     totalClicks: number;
+    clicksAvailable: number; // Optional field to indicate if the link is available
     user_id: mongoose.Types.ObjectId; // Refferens to owner
     category_id: mongoose.Types.ObjectId; // Refferens to category
     created_at: Date;
@@ -24,6 +25,7 @@ const LinkSchema: Schema<ILink> = new Schema({
     description: { type: String, required: true },
     redirectUrl: { type: String, required: true },
     totalClicks: { type: Number, default: 0 },
+    clicksAvailable: { type: Number, default: 0 },
     image: { type: String, required: false },
     video: { type: String, required: false },
     user_id: { type: Schema.Types.ObjectId, ref: "User", required: true }, // Relation to User

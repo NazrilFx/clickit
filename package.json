@@ -13,6 +13,7 @@
     "cloudinary": "^2.6.1",
     "csrf": "^3.1.0",
     "jsonwebtoken": "^9.0.2",
+    "midtrans-client": "^1.4.3",
     "mongoose": "^8.15.1",
     "nanoid": "^5.1.5",
     "next": "15.3.3",

@@ -2,6 +2,7 @@
 import LinksCard from "@/components/LinksCard";
 
 export default function AffiliatePage() {
+
   return (
     <>
       <section aria-label="Grow your audience" className="mb-8">

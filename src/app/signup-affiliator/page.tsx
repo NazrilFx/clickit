@@ -3,9 +3,9 @@ import FormInput from "@/components/FormInput";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import CountryDialCodePicker from "@/components/CountryNumberPicker";
-import getCsrfToken from "@/utils/fetcherCsrfToken";
+import getCsrfToken from "@/utils/fetcherCsrfToken"; 
 
-export default function SignupPage() {
+export default function SignupAffiliatorPage() {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -15,18 +15,16 @@ export default function SignupPage() {
   const [csrfToken, setCsrfToken] = useState("");
 
   useEffect(() => {
-    getCsrfToken()
-      .then((token) => setCsrfToken(token || ""))
-      .finally(() => setLoading(false));
+    getCsrfToken().then((token) => setCsrfToken(token || "")).finally(() => setLoading(false));
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/auth/signup", {
+      const res = await fetch("/api/auth-affiliator/signup", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           name,
@@ -34,8 +32,8 @@ export default function SignupPage() {
           password,
           phone: number,
           csrfToken, // Include CSRF token in the request
-        }),
-      });
+        })
+      })
       const json = await res.json();
       if (res.ok) {
         alert("Signup successful! please login to continue");
@@ -51,11 +49,11 @@ export default function SignupPage() {
     } catch (error) {
       console.error("Error during signup:", error);
     }
-  };
+  }
 
   return (
     <div className="flex flex-col items-center justify-center w-[450px] border-1 mt-10 border-gray-200 m-auto p-5 rounded-lg shadow-xl">
-      <h1 className="mb-2">Signup</h1>
+      <h1 className="mb-2">Signup as <span className="text-blue-600">Affiliator</span></h1>
       <form onSubmit={handleSubmit} className="flex flex-col *:m-3">
         <FormInput
           type="text"
@@ -105,7 +103,7 @@ export default function SignupPage() {
         </button>
         <p>
           Have an account?{" "}
-          <Link href={"/login"} className="text-blue-500">
+          <Link href={"/login-affiliator"} className="text-blue-500">
             Login here
           </Link>
         </p>

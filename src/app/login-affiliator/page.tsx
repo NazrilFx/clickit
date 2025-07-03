@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import isLogin from "@/utils/isLogin";
 
-export default function LoginPage() {
+export default function LoginAffiliatorPage() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -32,7 +32,7 @@ export default function LoginPage() {
       const isLoginCheck = await isLogin(); // misal import dari utils
       if (isLoginCheck) {
         alert("You are already logged in!");
-        router.push("/"); // Redirect to buyer page if already logged in
+        router.push("/buyer"); // Redirect to buyer page if already logged in
       }
     };
     checkLogin();
@@ -41,7 +41,7 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch("/api/auth-affiliator/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +56,7 @@ export default function LoginPage() {
       if (res.ok) {
         alert("Login successful!");
         // Redirect to login or home page
-        router.push("/buyer");
+        router.push("/affiliate");
       } else {
         alert(json.message || "Login failed");
       }
@@ -67,7 +67,7 @@ export default function LoginPage() {
 
   return (
     <div className="flex flex-col items-center justify-center w-[350px] border-1 mt-10 border-gray-200 m-auto p-5 rounded-lg shadow-xl">
-      <h1 className="mb-2">Login Page</h1>
+      <h1 className="mb-2">Login as <span className="text-blue-600">Affiliator</span></h1>
       <form onSubmit={handleSubmit} className="flex flex-col *:m-3">
         <FormInput
           type="email"
@@ -92,7 +92,7 @@ export default function LoginPage() {
         </button>
         <p>
           Dont have account?{" "}
-          <Link href={"/signup"} className="text-blue-500">
+          <Link href={"/signup-affiliator"} className="text-blue-500">
             click here
           </Link>
         </p>

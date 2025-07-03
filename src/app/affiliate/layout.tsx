@@ -29,9 +29,6 @@ export default function RootLayout({
             <IoSettingsOutline className="text-2xl" />
           </button>
         </nav>
-
-        <h1 className="mr-auto font-bold text-2xl pt-3 pb-5">Your Link</h1>
-
         {children}
       </main>
     </div>
