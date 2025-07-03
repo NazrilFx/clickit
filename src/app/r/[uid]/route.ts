@@ -27,6 +27,10 @@ export async function GET(req: Request, context: { params: Promise<{ uid: string
             return NextResponse.json({ error: 'Link not found', ip }, { status: 404 });
         }
 
+        if (link.clicksAvailable <= 0) {
+            return NextResponse.json({ error: 'Link has no available clicks', ip }, { status: 404 });
+        }
+        
         const existingLinkIps = await LinkVisitorIps.find({ ip, linkUid: uid })
         const existingGlobalIps = await GlobalVisitorIps.find({ ip })
 
@@ -54,7 +58,8 @@ export async function GET(req: Request, context: { params: Promise<{ uid: string
             affiliator._id,
             {
                 $inc: {
-                    balance_idr: Number(process.env.AFFILIATOR_COMMISSION_RP!)
+                    balance_idr: Number(process.env.AFFILIATOR_COMMISSION_RP!),
+                    total_clicks_obtained: 1
                 }
             }
         )
