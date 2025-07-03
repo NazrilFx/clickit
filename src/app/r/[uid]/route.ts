@@ -31,13 +31,13 @@ export async function GET(req: Request, context: { params: Promise<{ uid: string
         const existingGlobalIps = await GlobalVisitorIps.find({ ip })
 
         if (existingLinkIps.length > 0) {
-            return NextResponse.json({ message: "Redirect successl without adding total_clicks to the link because LinkIps is existing" });
-            // return NextResponse.redirect(link.redirectUrl);
+            // return NextResponse.json({ message: "Redirect successl without adding total_clicks to the link because LinkIps is existing" });
+            return NextResponse.redirect(link.redirectUrl);
         }
 
         if (existingGlobalIps.length > 0) {
-            return NextResponse.json({ message: "Redirect successl without adding total_clicks to the link because GlobalIps is existing" });
-            // return NextResponse.redirect(link.redirectUrl);
+            // return NextResponse.json({ message: "Redirect successl without adding total_clicks to the link because GlobalIps is existing" });
+            return NextResponse.redirect(link.redirectUrl);
         }
 
         const affiliator = await Affiliator.findOne({ uid: a });
@@ -84,8 +84,8 @@ export async function GET(req: Request, context: { params: Promise<{ uid: string
             return NextResponse.json({ error: 'Error while updating link', updatedLink }, { status: 400 });
         }
 
-        return NextResponse.json({ message: "redirect successfull" });
-        // return NextResponse.redirect(link.redirectUrl);
+        // return NextResponse.json({ message: "redirect successfull" });
+        return NextResponse.redirect(link.redirectUrl);
     } catch (error: unknown) {
         let errorMessage = "Internal Server Error";
 
