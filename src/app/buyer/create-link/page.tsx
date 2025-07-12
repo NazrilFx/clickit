@@ -38,7 +38,7 @@ export default function AffiliatePage() {
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    let imagesPreviewUrl: string[] = []
+    const imagesPreviewUrl: string[] = []
     let videoPreviewUrl: string = ""
     e.preventDefault()
     if (images.length > 0) {
