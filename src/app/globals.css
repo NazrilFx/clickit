@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-poppins: var(--font-poppins);
+  --font-mono: var(--font-geist-mono);
+  --color-softblack : #0f0f0f;
+  --color-softgray : #F3F4F6;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
