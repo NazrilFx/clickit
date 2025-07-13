@@ -6,6 +6,7 @@ import Link from "next/link";
 import FormInput from "@/components/FormInput";
 import getCsrfToken from "@/utils/fetcherCsrfToken";
 import { loadSnapScript } from "@/utils/loadSnapScript";
+import Image from "next/image";
 
 export default function LinksCard() {
   const [links, setLinks] = useState<ILinkWithId[]>([]);
@@ -145,15 +146,23 @@ export default function LinksCard() {
 
       <div className="grid grid-rows-* grid-cols-2 justify-center gap-4">
         {links.map((link, index) => (
+
           <div
             key={index}
             className="flex flex-col w-full max-w-[600px] md:flex-row items-center bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 overflow-hidden"
           >
-            <div className="h-full">
-              <img
-                className="w-[100%] h-[100%] object-cover"
-                src="/home.jpg"
+            <div className="relative w-[180px] h-full min-h-[100px]">
+              <Image
+                src={
+                  Array.isArray(link.image) &&
+                    typeof link.image[0] === "string" &&
+                    link.image[0].trim() !== ""
+                    ? link.image[0]
+                    : "/home.jpg"
+                }
                 alt="home"
+                fill
+                className="object-cover"
               />
             </div>
             <div className="flex flex-col justify-normal h-full bg-blue-50 flex-1 p-2 pl-4">

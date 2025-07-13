@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { ILinkWithId } from "@/models/Link";
 import getCurrentAffiliator from "@/utils/fetchCurrentAffiliator";
+import Image from "next/image";
 
 interface IFormattedLink extends ILinkWithId {
   linkName: string;
@@ -84,6 +85,10 @@ export default function AffiliatePage() {
                 >
                   View Link
                 </a>
+                  {link.image?.map((img) => (
+                    <p>Hello</p>
+                    // <Image key={img} src={img} alt={"Photo"}/>
+                  ))}
               </div>
             ))
           ) : (
